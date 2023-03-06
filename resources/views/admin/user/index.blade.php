@@ -12,6 +12,7 @@
                     <tr>
                         <th scope="col" class="text-center"></th>
                         <th scope="col" class="text-center">Nhân viên</th>
+                        <th scope="col" class="text-center">Chức vụ</th>
                         <th scope="col" class="text-center">Tên tài khoản</th>
                         <th scope="col" class="text-center">Email</th>
                         <th scope="col" class="fix text-center">Quyền</th>
@@ -28,7 +29,10 @@
                                     value="{{ $item['id'] }}" class="check">
                             </td>
                             <td scope="col" class="text-center align-middle" class="text-center">
-                                {{ $item['employee']['name'] }}
+                                {{ !empty($item['employee']) > 0 ? $item['employee']['name'] : 'tự do' }}
+                            </td>
+                            <td scope="col" class="text-center align-middle" class="text-center">
+                                {{ !empty($item['employee']) > 0 ? $item['employee']['position']['name'] : 'tự do' }}
                             </td>
                             <td scope="col" class="text-center align-middle " class="text-center">
                                 {{ $item['name'] }}

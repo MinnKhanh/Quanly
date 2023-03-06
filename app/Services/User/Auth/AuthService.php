@@ -25,6 +25,8 @@ class AuthService
     }
 
     /**
+     * @param Request $request
+     * Đăng nhập dựa vào thông tin đã nhập
      * @return array
      */
     public function signin($request)
@@ -54,7 +56,7 @@ class AuthService
     }
 
     /**
-     * đăng xuất
+     * đăng xuất tài khoản hiện tại
      */
     public function logout()
     {
@@ -63,8 +65,8 @@ class AuthService
     }
 
     /**
-     * @param  Request  $request
-     * reset mật khẩu
+     *  @param  Request  $request
+     *  reset mật khẩu
      *  @return User user
      */
     public function updatePassword($password)

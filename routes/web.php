@@ -116,6 +116,7 @@ Route::group([
     });
 });
 Route::get('/', function () {
+    dd(url()->previous('/user/employee'));
     $user = App\Models\User::where('id', 17)->first();
     dd($user, $user->syncRoles([1])); //->syncRoles(1);le(1));
 });

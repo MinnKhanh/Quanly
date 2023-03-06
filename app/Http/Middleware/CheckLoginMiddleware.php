@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\RoleEnum;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,8 @@ class CheckLoginMiddleware
         if (!auth()->check()) {
             return $next($request);
         }
-        return redirect()->back();
+        if (auth()->user()->hasRole(RoleEnum::ADMIN))
+            return redirect()->to(url()->previous('/user/employee'));
+        return redirect()->to(url()->previous('/admin/employee'));
     }
 }

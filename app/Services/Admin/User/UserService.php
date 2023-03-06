@@ -36,7 +36,9 @@ class UserService
      */
     public function getList()
     {
-        return $this->model->with('Employee', 'Roles')->get()->toArray();
+        return $this->model->with(['Employee' => function ($query) {
+            $query->with(['Position']);
+        }, 'Roles'])->get()->toArray();
     }
     /**
      *  @return array
