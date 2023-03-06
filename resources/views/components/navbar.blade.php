@@ -31,7 +31,8 @@
             @if (auth()->check())
                 <li class="nav-item nav-search d-flex pt-2 pb-2">
                     @if (auth()->user()->hasRole(1))
-                        <a class="btn" style="font-size: .7rem;" href="{{ route('admin.auth.logout') }}">Đăng
+                        <a class="btn btn-info mr-2" style="font-size: .7rem;"
+                            href="{{ route('admin.auth.logout') }}">Đăng
                             xuất</a>
                     @else
                         <a class="btn btn-info mr-2" href="{{ route('user.edit') }}" style="font-size: .7rem;"
