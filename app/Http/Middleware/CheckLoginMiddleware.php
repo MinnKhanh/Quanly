@@ -2,12 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Enums\RoleEnum;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class CheckUserMiddleware
+class CheckLoginMiddleware
 {
     /**
      * Handle an incoming request.
@@ -18,9 +16,9 @@ class CheckUserMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->hasRole(RoleEnum::USER)) {
+        if (!auth()->check()) {
             return $next($request);
         }
-        return redirect()->route('user.auth.login')->with(['msg' => 'Vui lòng đăng nhập bằng tài khoản user']);
+        return redirect()->back();
     }
 }

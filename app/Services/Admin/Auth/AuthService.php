@@ -23,8 +23,11 @@ class AuthService
     {
         $this->model = $user;
     }
+
     /**
-     * @return mixed
+     * @param  Request  $request
+     * Đăng nhập
+     * @return rediect
      */
     public function signin($request)
     {
@@ -39,7 +42,7 @@ class AuthService
             $is_remember
         )) {
             if (!auth()->user()->is_first) {
-                return redirect()->route('change_password');
+                return redirect()->route('admin.auth.change_password');
             }
             if (auth()->user()->hasRole(RoleEnum::ADMIN)) {
                 return redirect()->route('admin.employee.index');
@@ -51,11 +54,21 @@ class AuthService
             return redirect()->back()->withErrors(['msg' => 'Đăng nhập thất bại']);
         }
     }
+
+    /**
+     * Đăng xuất
+     */
     public function logout()
     {
         Auth::logout();
         Artisan::call('cache:clear');
     }
+
+    /**
+     * @param  String  $password
+     * Xóa thông thin
+     * @return User user
+     */
     public function updatePassword($password)
     {
         // dd(Auth::user());
@@ -63,12 +76,6 @@ class AuthService
         $user->is_first = 1;
         $user->password = Hash::make($password);
         $user->save();
-        if ($user->hasRole('admin')) {
-
-            return redirect()->route('admin.employee.index');
-        } else {
-            Auth::logout();
-            return redirect()->route('admin.auth.login')->withErrors(['msg' => "Vui lòng đăng nhập bằng tài khoản admin"]);
-        }
+        return $user;
     }
 }

@@ -32,20 +32,29 @@ class UserService
         $this->model = $user;
     }
     /**
-     * @return mixed
+     * @return array
      */
     public function getList()
     {
         return $this->model->with('Employee', 'Roles')->get()->toArray();
     }
+    /**
+     *  @return array
+     */
     public function create($employee)
     {
         // dd($employee);
         return ['roles' => Role::all()->toArray(), 'employee' => $employee];
     }
+
+    /**
+     * @param  Request  $request
+     * Lưu thông tin cần tạo
+     *  @return User user
+     */
     public function store($request = null)
     {
-        dd('adfas');
+        // dd('adfas');
         try {
             DB::beginTransaction();
             $data = [
@@ -54,17 +63,28 @@ class UserService
                 'password' => Hash::make($request->password),
             ];
             $user = $this->model->create($data);
-            $user->syncRoles($request->role);
+            // $user->syncRoles($request->role);
+            DB::table('model_has_roles')->insert([
+                'role_id' => $request->role,
+                'model_type' => get_class($user),
+                'model_id' => $user->id
+            ]);
             Employee::find($request->input('id_employee'))->update(['id_account' => $user->id]);
             JobsSendAccount::dispatch($request->email, $request->name, $request->password);
             DB::commit();
-            return true;
+            return $user;
         } catch (Throwable $e) {
             DB::rollback();
-            dd($e)
-            return false;
+            // dd($e);
+            return null;
         }
     }
+
+    /**
+     * @param  Request  $request
+     * Xóa tài khoản
+     *  @return boolean
+     */
     public function delete($request)
     {
         if ($request->input('id')) {
@@ -75,6 +95,12 @@ class UserService
             return true;
         } else return false;
     }
+
+    /**
+     * @param  Request  $request
+     * reset mật khẩu
+     *  @return response json
+     */
     public function resetPassword($request)
     {
         try {

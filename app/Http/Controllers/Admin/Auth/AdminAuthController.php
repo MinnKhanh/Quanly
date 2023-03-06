@@ -7,6 +7,7 @@ use App\Http\Requests\AuthRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Services\Admin\Auth\AuthService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminAuthController extends Controller
 {
@@ -29,12 +30,17 @@ class AdminAuthController extends Controller
     }
     public function updatePassword(ChangePasswordRequest $request)
     {
-        return $this->authService->updatePassword($request->password);
+        if ($this->authService->updatePassword($request->password)->hasRole('admin')) {
+
+            return redirect()->route('admin.employee.index');
+        } else {
+            Auth::logout();
+            return redirect()->route('admin.auth.login')->withErrors(['msg' => "Vui lòng đăng nhập bằng tài khoản admin"]);
+        }
     }
     public function logout()
     {
         $this->authService->logout();
-
         return redirect()->route('admin.auth.login');
     }
 }

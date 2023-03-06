@@ -29,15 +29,20 @@ class EmployeeService
     {
         return $this->model->with('Position', 'Department', 'ManagerDepartment')->get();
     }
+
+    /**
+     * @return int $position
+     */
     public function getPriorityLevel()
     {
         $position = Position::pluck('priority_level', 'id');
         return $position[Employee::where('id_account', auth()->user()->id)->first()->position];
     }
+
     /**
-     * @param $type
-     * @param  bool|int  $perPage
-     * @return mixed
+     * @param Request $request
+     * cập nhật thông tin cá nhân
+     * @return Employee $model
      */
     public function update($request)
     {
@@ -62,6 +67,12 @@ class EmployeeService
             return null;
         }
     }
+
+    /**
+     * @param int $is
+     * Lấy thông tin nhân viên
+     * @return array
+     */
     public function detail($id)
     {
         return  $this->model->where('id', $id)->with('Position', 'Department', 'ManagerDepartment')->first()->toArray();

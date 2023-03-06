@@ -38,9 +38,11 @@ Route::group([
         'as'     => 'auth.',
         'prefix' => 'auth',
     ], static function () {
-        Route::get('/login', [AdminAuthController::class, 'login'])->name('login');
+        Route::get('/login', [AdminAuthController::class, 'login'])->name('login')->middleware('check.login');
         Route::post('/singin', [AdminAuthController::class, 'signin'])->name('signin');
         Route::get('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+        Route::get('/change-password', [AdminAuthController::class, 'changePassword'])->name('change_password');
+        Route::put('/update-password', [AdminAuthController::class, 'updatePassword'])->name('update_password');
     });
     Route::group([
         'middleware' => 'check.admin',
@@ -93,23 +95,27 @@ Route::group([
         'as'     => 'auth.',
         'prefix' => 'auth',
     ], static function () {
-        Route::get('/login', [UserAuthController::class, 'login'])->name('login');
+        Route::get('/login', [UserAuthController::class, 'login'])->name('login')->middleware('check.login');
         Route::post('/signin', [UserAuthController::class, 'signin'])->name('signin');
         Route::get('/logout', [UserAuthController::class, 'logout'])->name('logout');
+        Route::get('/change-password', [UserAuthController::class, 'changePassword'])->name('change_password');
+        Route::put('/update-password', [UserAuthController::class, 'updatePassword'])->name('update_password');
     });
     Route::group([
-        'as'     => 'employee.',
-        'prefix' => 'employee',
+        'middleware'     => 'check.user',
     ], static function () {
-        Route::get('/', [EmployeeEmployeeController::class, 'index'])->name('index');
-        Route::get('{id}/detail', [EmployeeEmployeeController::class, 'detail'])->name('detail');
+        Route::group([
+            'as'     => 'employee.',
+            'prefix' => 'employee',
+        ], static function () {
+            Route::get('/', [EmployeeEmployeeController::class, 'index'])->name('index');
+            Route::get('{id}/detail', [EmployeeEmployeeController::class, 'detail'])->name('detail');
+        });
+        Route::get('/edit', [UserUserController::class, 'edit'])->name('edit');
+        Route::put('/update', [UserUserController::class, 'update'])->name('update');
     });
-    Route::get('/edit', [UserUserController::class, 'edit'])->name('edit');
-    Route::put('/update', [UserUserController::class, 'update'])->name('update');
 });
-Route::get('/change-password', [AdminAuthController::class, 'changePassword'])->name('change_password');
-Route::put('/update-password', [AdminAuthController::class, 'updatePassword'])->name('update_password');
 Route::get('/', function () {
-    $user = App\Models\User::where('id', 16)->first();
-    dd($user, $user->hasRole(1));
+    $user = App\Models\User::where('id', 17)->first();
+    dd($user, $user->syncRoles([1])); //->syncRoles(1);le(1));
 });

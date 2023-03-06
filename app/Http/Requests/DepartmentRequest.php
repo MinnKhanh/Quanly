@@ -28,4 +28,16 @@ class DepartmentRequest extends FormRequest
             'manager' => ['required', 'numeric', 'min:1'],
         ];
     }
+    public function messages()
+    {
+        return [
+            'required' => 'Trường :attribute không được để trống',
+            'regex' => ':attribute không đúng định dạng',
+            'same' => ':attribute không khớp',
+            'string' => ':attribute phải là chuỗi',
+            'min' => [
+                'numeric' => ':attribute tối thiểu :min',
+            ],
+        ];
+    }
 }

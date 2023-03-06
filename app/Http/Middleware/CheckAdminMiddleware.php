@@ -18,9 +18,9 @@ class CheckAdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        // if (Auth::check() && Auth::user()->hasRole(RoleEnum::ADMIN)) {
-        return $next($request);
-        // }
-        // return redirect()->route('admin.auth.login')->with(['msg' => 'Vui lòng đăng nhập bằng tài khoản admin']);
+        if (Auth::check() && Auth::user()->hasRole(RoleEnum::ADMIN)) {
+            return $next($request);
+        }
+        return redirect()->route('admin.auth.login')->with(['msg' => 'Vui lòng đăng nhập bằng tài khoản admin']);
     }
 }

@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Thay đổi mật khẩu') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('admin.auth.update_password') }}">
+                        <form method="POST" action="{{ route('user.auth.update_password') }}">
                             @csrf
                             @method('PUT')
                             <div class="row mb-3">

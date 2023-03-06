@@ -29,17 +29,26 @@ class EmployeeService
         $this->model = $user;
     }
     /**
-     * @return mixed
+     * @return Employee employee
      */
     public function getList()
     {
-        return $this->model->with('Position', 'Department', 'ManagerDepartment')->get();
+        return $this->model->with('Position', 'Department', 'ManagerDepartment', 'Account')->get();
     }
+
+    /**
+     * @return array
+     */
     public function create()
     {
         return ['positions' => Position::all()->toArray(), 'departments' => Department::all()->toArray()];
     }
-    //'roles' => Role::all()->toArray(),
+
+    /**
+     * @param  Request  $request
+     * Lưu thông tin cần tạo
+     *  @return Employee employee
+     */
     public function store($request = null)
     {
         try {
@@ -62,11 +71,23 @@ class EmployeeService
             return null;
         }
     }
+
+    /**
+     * @param  int  $id
+     * lấp thông tin cần cập nhật
+     *  @return array
+     */
     public function edit($id)
     {
         // dd($this->model->where('id', $id)->with('Account', 'ManagerDepartment')->first()->toArray());
         return ['positions' => Position::all()->toArray(), 'departments' => Department::all()->toArray(), 'data' => $this->model->where('id', $id)->with('Account', 'ManagerDepartment')->first()->toArray()];
     }
+
+    /**
+     * @param  Request  $request
+     * Lưu thông tin cần cập nhật
+     *  @return Employee employee
+     */
     public function update($request)
     {
         try {

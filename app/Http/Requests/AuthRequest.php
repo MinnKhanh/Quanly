@@ -24,8 +24,20 @@ class AuthRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'string', 'min:1'],
+            'email' => ['required', 'string', 'regex:/(.+)@(.+)\.(.+)/i'],
             'password' => ['required', 'string', 'min:6'],
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'required' => 'Trường :attribute không được để trống',
+            'regex' => ':attribute không đúng định dạng',
+            'same' => ':attribute không khớp',
+            'string' => ':attribute phải là chuỗi',
+            'min' => [
+                'string' => ':attribute tối thiểu :min kí tự',
+            ],
         ];
     }
 }

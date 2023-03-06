@@ -21,7 +21,7 @@ class DepartmentService
         $this->model = $department;
     }
     /**
-     * @return mixed
+     * @return list Department
      */
     public function getList()
     {
@@ -30,7 +30,10 @@ class DepartmentService
     public function create()
     {
     }
-    //'roles' => Role::all()->toArray(),
+    /**
+     * Lưu thông tin cần tạo
+     * @return Department
+     */
     public function store($request = null)
     {
         // dd($request->all());
@@ -41,11 +44,23 @@ class DepartmentService
         }
         return null;
     }
+
+    /**
+     * @param  Department  $department
+     * Lưu thông tin cần sửa
+     * @return array
+     */
     public function edit($department)
     {
         // dd($employee->with('Account')->first()->toArray());
         return ['data' => $department->with('Account')->first()->toArray()];
     }
+
+    /**
+     * @param  Request  $request
+     * Lấy thông tin cần update
+     * @return Department
+     */
     public function update($request)
     {
         try {
@@ -57,6 +72,12 @@ class DepartmentService
             return null;
         }
     }
+
+    /**
+     * @param  Request  $request
+     * Xóa thông thin
+     * @return boolean
+     */
     public function delete($request)
     {
         if ($request->id) {

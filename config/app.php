@@ -176,7 +176,6 @@ return [
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         BenSampo\Enum\EnumServiceProvider::class,
-        Laravel\Sanctum\SanctumServiceProvider::class,
 
     ],
 

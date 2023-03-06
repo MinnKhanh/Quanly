@@ -31,4 +31,22 @@ class UserRequest extends FormRequest
             'password' => ['required', 'string', 'min:6'],
         ];
     }
+    public function messages()
+    {
+        return [
+            'required' => 'Trường :attribute không được để trống',
+            'regex' => ':attribute không đúng định dạng',
+            'date' => ':attribute không đúng định dạng',
+            'numeric' => ':attribute không đúng định dạng',
+            'role.numeric' => 'vui lòng chọn quyền',
+            'same' => ':attribute không khớp',
+            'string' => ':attribute phải là chuỗi',
+            'file' => ':attribute không đúng định dạng',
+            'unique' => ':attribute đã tồn tại',
+            'min' => [
+                'numeric' => 'vui lòng chọn :attribute',
+                'string' => ':attribute tối thiểu :min kí tự',
+            ],
+        ];
+    }
 }

@@ -4,6 +4,8 @@ namespace App\Http;
 
 use App\Http\Middleware\CheckAdminMiddleware;
 use App\Http\Middleware\CheckAuthMiddleware;
+use App\Http\Middleware\CheckLoginMiddleware;
+use App\Http\Middleware\CheckUserMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -44,6 +46,9 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
 
@@ -66,5 +71,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'check.auth' => CheckAuthMiddleware::class,
         'check.admin' => CheckAdminMiddleware::class,
+        'check.user' => CheckUserMiddleware::class,
+        'check.login' => CheckLoginMiddleware::class
     ];
 }

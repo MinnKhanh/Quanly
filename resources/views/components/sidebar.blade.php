@@ -2,12 +2,6 @@
     @if (auth()->user()->hasRole(2))
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="">
-                    <i class="mdi mdi-home menu-icon"></i>
-                    <span class="menu-title">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#type" role="button" aria-expanded="false"
                     aria-controls="type">
                     <i class="fa-solid fa-clipboard-user"></i>
@@ -21,13 +15,6 @@
                                 nhân viên</a></li>
                     </ul>
                 </div>
-            </li>
-            <li class="mt-5"
-                style="background-color: blue; width: 100%; padding: 10px;border-radius: 3px;padding-left: 2rem;">
-                <a class="" style="color:white;font-weight: 900;" href="">
-                    <i class="fas fa-arrow-left menu-icon"></i>
-                    <span class="menu-title ml-1">Quay lại cửa hàng</span>
-                </a>
             </li>
         </ul>
     @else
@@ -85,13 +72,6 @@
                                 tài khoản</a></li>
                     </ul>
                 </div>
-            </li>
-            <li class="mt-5"
-                style="background-color: blue; width: 100%; padding: 10px;border-radius: 3px;padding-left: 2rem;">
-                <a class="" style="color:white;font-weight: 900;" href="">
-                    <i class="fas fa-arrow-left menu-icon"></i>
-                    <span class="menu-title ml-1">Quay lại cửa hàng</span>
-                </a>
             </li>
         </ul>
     @endif

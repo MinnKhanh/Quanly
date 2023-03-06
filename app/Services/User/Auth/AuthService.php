@@ -23,12 +23,14 @@ class AuthService
     {
         $this->model = $user;
     }
+
     /**
-     * @return mixed
+     * @return array
      */
     public function signin($request)
     {
         // dd($request->input());
+        Auth::logout();
         $is_remember = $request->input('remember') ? true : false;
         if (Auth::attempt(
             [
@@ -38,7 +40,7 @@ class AuthService
             $is_remember
         )) {
             if (!auth()->user()->is_first) {
-                return redirect()->route('change_password');
+                return redirect()->route('user.auth.change_password');
             }
             if (auth()->user()->hasRole(RoleEnum::USER)) {
                 return redirect()->route('user.employee.index');
@@ -50,11 +52,21 @@ class AuthService
             return redirect()->back()->withErrors(['msg' => 'Đăng nhập thất bại']);
         }
     }
+
+    /**
+     * đăng xuất
+     */
     public function logout()
     {
         Auth::logout();
         Artisan::call('cache:clear');
     }
+
+    /**
+     * @param  Request  $request
+     * reset mật khẩu
+     *  @return User user
+     */
     public function updatePassword($password)
     {
         // dd(Auth::user());
@@ -62,13 +74,6 @@ class AuthService
         $user->is_first = 1;
         $user->password = Hash::make($password);
         $user->save();
-        if ($user->hasRole('user')) {
-
-            return redirect()->route('user.employee.index');
-        } else {
-
-            Auth::logout();
-            return redirect()->route('user.auth.login')->withErrors(['msg' => "Vui lòng đăng nhập bằng tài khoản user"]);
-        }
+        return $user;
     }
 }

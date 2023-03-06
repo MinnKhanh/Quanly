@@ -48,26 +48,29 @@
                                 {{ $item['date_entered'] }}
                             </td>
                             <td scope="col" class="text-center d-flex">
-                                <a class="btn btn-warning btn-sm rounded-0"
+                                <a class="btn btn-warning btn-sm rounded-0 ml-1"
                                     href="{{ route('admin.employee.edit', ['id' => $item['id']]) }}"><i
-                                        class="fa fa-pencil"></i></a>
-                                <form action="{{ route('admin.employee.delete') }}" method="POST">
+                                        class="fa fa-pencil"></i>Sửa</a>
+                                <form action="{{ route('admin.employee.delete') }}" class=" ml-1" method="POST">
                                     @csrf
                                     @method('delete')
                                     <input type="hidden" name="id" value="{{ $item['id'] }}">
-                                    <button class="btn btn-danger btn-sm rounded-0"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-danger btn-sm rounded-0"><i class="fa fa-trash"></i>Xóa</button>
                                 </form>
+                                @if (!empty($item['account']))
+                                    <div class="btn-secondary btn-sm ml-1">Đã có <i class="fa-solid fa-user"></i></div>
+                                @else
+                                    <a class="btn btn-success btn-sm rounded-0  ml-1"
+                                        href="{{ route('admin.account.create', ['employee' => $item['id']]) }}">
+                                        Tạo <i class="fa-solid fa-user"></i>
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @empty
                     @endforelse
                 </tbody>
             </table>
-        </div>
-        <div class="row mb-5">
-            <div class="col-lg-12">
-
-            </div>
         </div>
     </div>
 @endsection

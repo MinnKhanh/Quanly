@@ -36,4 +36,21 @@ class UserInfoRequest extends FormRequest
             'img' => request('isedit') ? '' : 'required|file|mimes:jpeg,jpg,png,gif',
         ];
     }
+    public function messages()
+    {
+        return [
+            'required' => 'Trường :attribute không được để trống',
+            'regex' => ':attribute không đúng định dạng',
+            'date' => ':attribute không đúng định dạng',
+            'numeric' => ':attribute không đúng định dạng',
+            'same' => ':attribute không khớp',
+            'string' => ':attribute phải là chuỗi',
+            'file' => ':attribute không đúng định dạng',
+            'unique' => ':attribute đã tồn tại',
+            'min' => [
+                'numeric' => 'vui lòng chọn :attribute',
+                'string' => ':attribute tối thiểu :min kí tự',
+            ],
+        ];
+    }
 }

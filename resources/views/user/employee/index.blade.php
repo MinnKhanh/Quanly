@@ -52,6 +52,8 @@
                                     <a class="btn btn-info btn-sm rounded-0"
                                         href="{{ route('user.employee.detail', ['id' => $item['id']]) }}"><i
                                             class="fa-solid fa-eye"></i></a>
+                                @else
+                                    <a class="btn btn-secondary btn-sm rounded-0"><i class="fa-solid fa-eye-slash"></i></a>
                                 @endif
 
                             </td>

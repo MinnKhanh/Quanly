@@ -1,9 +1,17 @@
+@php
+    use App\Enums\RoleEnum;
+@endphp
 <nav class="container-fluid navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="navbar-brand-wrapper d-flex justify-content-center">
         <div class="navbar-brand-inner-wrapper d-flex justify-content-center align-items-center w-100">
             <a class="navbar-brand brand-logo d-flex justify-content-start align-items-center"
-                href="{{ asset('admin/dashboard') }}"><span
-                    style="font-size: large; font-weight: 900; margin-left: 1px;">Admin</span></a>
+                href="{{ asset('admin/dashboard') }}"><span style="font-size: large; font-weight: 900; margin-left: 1px;">
+                    @if (auth()->user()->hasRole(RoleEnum::USER))
+                        User
+                    @else
+                        Admin
+                    @endif
+                </span></a>
             <a class="navbar-brand brand-logo-mini" href="{{ asset('admin/dashboard') }}">
                 <img src="{{ asset('admin/images/logo.svg') }}" alt="logo" />
             </a>
@@ -21,11 +29,17 @@
         </ul>
         <ul class="navbar-nav navbar-nav-right">
             @if (auth()->check())
-                <li class="nav-item nav-search d-none d-lg-block w-100">
+                <li class="nav-item nav-search d-flex pt-2 pb-2">
                     @if (auth()->user()->hasRole(1))
-                        <a class="btn" href="{{ route('admin.auth.logout') }}">Đăng xuất</a>
+                        <a class="btn" style="font-size: .7rem;" href="{{ route('admin.auth.logout') }}">Đăng
+                            xuất</a>
                     @else
-                        <a class="btn" href="{{ route('user.auth.logout') }}">Đăng xuất</a>
+                        <a class="btn btn-info mr-2" href="{{ route('user.edit') }}" style="font-size: .7rem;"
+                            role="button">
+                            <span class="menu-title">Thông tin cá nhân</span>
+                        </a>
+                        <a class="btn btn-primary" style="font-size: .7rem;" href="{{ route('user.auth.logout') }}">Đăng
+                            xuất</a>
                     @endif
 
                 </li>
