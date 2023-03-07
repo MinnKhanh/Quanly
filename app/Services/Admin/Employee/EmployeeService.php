@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Position;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -122,9 +123,20 @@ class EmployeeService
      */
     public function delete($request)
     {
-        if ($this->model->find($request->id)->delete())
+        try {
+            DB::beginTransaction();
+            $employ = $this->model->find($request->id);
+            $user = User::where('id', $employ->id_account)->first();
+            $user->syncRoles([]);
+            $user->delete();
+            Department::where('manager', $employ->id)->update(['manager' => null]);
+            $employ->delete();
+            DB::commit();
             return true;
-        return false;
+        } catch (Throwable $e) {
+            DB::rollBack();
+            return false;
+        }
     }
     /**
      * @param  int  $id

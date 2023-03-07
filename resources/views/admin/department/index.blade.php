@@ -4,25 +4,22 @@
         <div class="error">{{ $errors->first('msg') }}</div>
     @endif
     <div>
-        {{-- <div class="d-flex mb-5">
-            <div class="mr-3">
-                <label for="" class="d-block">Tên</label>
-                <input class="form-control" id="name" placeholder="Tên khách hàng">
-            </div>
-            <div class="mr-3">
-                <label for="" class="d-block">Số điện thoại</label>
-                <input class="form-control" id="name" placeholder="Tên khách hàng">
-            </div>
-            <div class="mr-3">
-                <label for="" class="d-block">Email</label>
-                <input class="form-control" id="name" placeholder="Tên khách hàng">
-            </div>
-            <div class="mr-3">
-                <label for="" class="d-block">Thời gian gia nhập</label>
-                <input type="date" class="end form-control ml-1" style="height: 35px" class="">
-            </div>
-
-        </div> --}}
+        <div>
+            @if (\Session::has('msg'))
+                <div class="alert alert-danger">
+                    <ul>
+                        <li>{!! \Session::get('msg') !!}</li>
+                    </ul>
+                </div>
+            @endif
+            @if (\Session::has('success'))
+                <div class="alert alert-success">
+                    <ul>
+                        <li>{!! \Session::get('success') !!}</li>
+                    </ul>
+                </div>
+            @endif
+        </div>
         <div class="container-fluid" style="overflow-x: scroll;">
             <table class="table w-100">
                 <thead class="thead-dark">

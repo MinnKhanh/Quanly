@@ -3,6 +3,7 @@
 namespace App\Services\Admin\Department;
 
 use App\Models\Department;
+use App\Models\Employee;
 use Throwable;
 
 /**
@@ -80,8 +81,10 @@ class DepartmentService
      */
     public function delete($request)
     {
-        if ($request->id) {
-            $this->model->find($request->id)->delete();
+        $department = $this->model->find($request->id);
+        $numberOfDepartment = Employee::where('department', $department->id)->count();
+        if ($request->id && $numberOfDepartment == 0) {
+            $department->delete();
             return true;
         }
         return false;
