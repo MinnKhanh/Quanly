@@ -114,10 +114,25 @@ class EmployeeService
             return null;
         }
     }
+
+    /**
+     * @param  Request  $request
+     * Xóa nhân viên
+     *  @return boolean
+     */
     public function delete($request)
     {
         if ($this->model->find($request->id)->delete())
             return true;
         return false;
+    }
+    /**
+     * @param  int  $id
+     * Lấy thông tin nhân viên
+     *  @return Employee
+     */
+    public function detail($id)
+    {
+        return  $this->model->where('id', $id)->with('Position', 'Department', 'ManagerDepartment')->first()->toArray();
     }
 }

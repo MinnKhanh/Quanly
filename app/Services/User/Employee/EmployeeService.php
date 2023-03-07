@@ -69,7 +69,7 @@ class EmployeeService
     }
 
     /**
-     * @param int $is
+     * @param int $id
      * Lấy thông tin nhân viên
      * @return array
      */

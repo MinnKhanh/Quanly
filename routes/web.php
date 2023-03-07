@@ -57,6 +57,7 @@ Route::group([
             Route::get('{id}/edit', [EmployeeController::class, 'edit'])->name('edit');
             Route::put('/update', [EmployeeController::class, 'update'])->name('update');
             Route::delete('/delete', [EmployeeController::class, 'delete'])->name('delete');
+            Route::get('{id}/detail', [EmployeeController::class, 'detail'])->name('detail');
         });
         Route::group([
             'as'     => 'account.',

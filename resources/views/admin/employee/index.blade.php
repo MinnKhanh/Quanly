@@ -48,6 +48,9 @@
                                 {{ $item['date_entered'] }}
                             </td>
                             <td scope="col" class="text-center d-flex">
+                                <a class="btn btn-info btn-sm rounded-0"
+                                    href="{{ route('admin.employee.detail', ['id' => $item['id']]) }}"><i
+                                        class="fa-solid fa-eye"></i> Xem</a>
                                 <a class="btn btn-warning btn-sm rounded-0 ml-1"
                                     href="{{ route('admin.employee.edit', ['id' => $item['id']]) }}"><i
                                         class="fa fa-pencil"></i>Sửa</a>

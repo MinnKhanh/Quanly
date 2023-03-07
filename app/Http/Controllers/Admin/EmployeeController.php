@@ -52,4 +52,8 @@ class EmployeeController extends Controller
             return Redirect::route('admin.employee.index')->with('success', 'Tạo thành công');
         return Redirect::route('admin.employee.index')->withErrors(['msg' => 'Xóa thất bại']);
     }
+    public function detail($id)
+    {
+        return view('admin.employee.detail', ['data' => $this->employeeService->detail($id)]);
+    }
 }

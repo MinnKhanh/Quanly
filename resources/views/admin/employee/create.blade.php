@@ -5,6 +5,11 @@
 @endpush
 @section('content')
     <div class="container">
+        <div>
+            @if ($errors->has('msg'))
+                <p class="error">{{ $errors->first('msg') }}</p>
+            @endif
+        </div>
         <form class="row" action="{{ route('admin.employee.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <h4 class="co-6 checkout__input text-center"> Tạo thông tin nhân viên</h4>
