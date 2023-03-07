@@ -20,12 +20,6 @@
     @else
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="">
-                    <i class="mdi mdi-home menu-icon"></i>
-                    <span class="menu-title">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#type" role="button" aria-expanded="false"
                     aria-controls="type">
                     <i class="fa-solid fa-clipboard-user"></i>
@@ -53,7 +47,7 @@
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item"><a class="nav-link" href="{{ route('admin.department.index') }}">Danh sách
                                 phòng ban</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('admin.department.index') }}">Thêm
+                        <li class="nav-item"><a class="nav-link" href="{{ route('admin.department.create') }}">Thêm
                                 phòng
                                 ban</a></li>
                     </ul>

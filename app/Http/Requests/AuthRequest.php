@@ -25,7 +25,7 @@ class AuthRequest extends FormRequest
     {
         return [
             'email' => ['required', 'string', 'regex:/(.+)@(.+)\.(.+)/i'],
-            'password' => ['required', 'string', 'min:6'],
+            'password' => request('is_reset') ? '' : ['required', 'string', 'min:6'],
         ];
     }
     public function messages()

@@ -98,6 +98,8 @@ Route::group([
         Route::get('/login', [UserAuthController::class, 'login'])->name('login')->middleware('check.login');
         Route::post('/signin', [UserAuthController::class, 'signin'])->name('signin');
         Route::get('/logout', [UserAuthController::class, 'logout'])->name('logout');
+        Route::get('/forgot-password', [UserAuthController::class, 'forgotPassword'])->name('forgot_password');
+        Route::post('/reset-password', [UserAuthController::class, 'resetPassword'])->name('reset_password');
         Route::get('/change-password', [UserAuthController::class, 'changePassword'])->name('change_password');
         Route::put('/update-password', [UserAuthController::class, 'updatePassword'])->name('update_password');
     });

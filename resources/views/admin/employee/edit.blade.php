@@ -27,7 +27,8 @@
                     </div>
                     <div class="avatar-preview">
                         <div id="imagePreview" style="overflow: hidden">
-                            <img id="output" src="{{ asset('/storage/employee/' . $data['img']) }}" />
+                            <img id="output" style="width: 100%;height: 100%;"
+                                src="{{ asset('/storage/employee/' . $data['img']) }}" />
                         </div>
                     </div>
                     <p class="error">

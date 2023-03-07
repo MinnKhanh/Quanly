@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Auth;
 
+use App\Enums\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
 use App\Http\Requests\ChangePasswordRequest;
@@ -30,7 +31,7 @@ class AdminAuthController extends Controller
     }
     public function updatePassword(ChangePasswordRequest $request)
     {
-        if ($this->authService->updatePassword($request->password)->hasRole('admin')) {
+        if ($this->authService->updatePassword($request->password)->hasRole(RoleEnum::ADMIN)) {
 
             return redirect()->route('admin.employee.index');
         } else {

@@ -3,10 +3,16 @@
 namespace App\Services\User\Auth;
 
 use App\Enums\RoleEnum;
+use App\Jobs\ResetPassword;
 use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
+use Throwable;
 
 /**
  * Class UserService.
@@ -17,9 +23,9 @@ class AuthService
     /**
      * UserService constructor.
      *
-     * @param  Employee  $user
+     * @param  Userx  $user
      */
-    public function __construct(Employee $user)
+    public function __construct(User $user)
     {
         $this->model = $user;
     }
@@ -66,7 +72,7 @@ class AuthService
 
     /**
      *  @param  Request  $request
-     *  reset mật khẩu
+     *  cập nhật mật khẩu
      *  @return User user
      */
     public function updatePassword($password)
@@ -77,5 +83,29 @@ class AuthService
         $user->password = Hash::make($password);
         $user->save();
         return $user;
+    }
+
+    /**
+     *  @param  Request  $request
+     *  reset mật khẩu
+     *  @return boolean
+     */
+    public function resetPassword($request)
+    {
+        try {
+            DB::beginTransaction();
+            $data = [];
+            $password = Str::random(8);
+            $user = $this->model::where('email', $request->input('email'))->first();
+            $user->update(['password' => Hash::make($password), 'is_first' => null]);
+            $data[] = ['email' => $user->email, 'password' => $password];
+            DB::commit();
+            ResetPassword::dispatch($data);
+            return true;
+        } catch (Throwable $e) {
+            dd($e);
+            DB::rollback();
+            return false;
+        }
     }
 }

@@ -10,14 +10,15 @@
 
     <div class="sidenav">
         <div class="login-main-text">
-            <h2>Admin<br> Login Page</h2>
+            <h2>User<br> Login Page</h2>
         </div>
     </div>
     <div class="main">
         <div class="col-md-6 col-sm-12">
             <div class="login-form">
-                <form method="POST" action="{{ route('admin.auth.signin') }}">
+                <form method="POST" action="{{ route('user.auth.reset_password') }}">
                     @csrf
+                    <input type="hidden" name="is_reset" value="1">
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" class="form-control" name="email" value="{{ old('email') }}" required
@@ -28,14 +29,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" name="password" class="form-control" placeholder="Password">
-                        @if ($errors->has('password'))
-                            <div class="error">{{ $errors->first('password') }}</div>
-                        @endif
-                    </div>
-                    <button type="submit" class="btn btn-black">Login</button>
+                    <button type="submit" class="btn btn-black">Reset</button>
                     <div class="rowd d-flex mt-3 justify-content-center text-center">
                         @if ($errors->has('msg'))
                             <div class="error">{{ $errors->first('msg') }}</div>

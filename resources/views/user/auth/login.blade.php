@@ -1,72 +1,47 @@
 @extends('layouts.layout_login')
-
+@push('css')
+    <link rel="stylesheet" href="{{ asset('/css/form-layout.css') }}">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+@endpush
 @section('content')
-    <div class="container mb-4 mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('User Đăng nhập') }}</div>
+    <!------ Include the above in your HEAD tag ---------->
 
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('user.auth.signin') }}">
-                            @csrf
-
-                            <div class="row mb-3">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="email" type="email"
-                                        class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="password"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Mật khẩu') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="password" type="password"
-                                        class="form-control @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="current-password">
-
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            @if (Route::has('password.request'))
-                                <div class="col-md-6 offset-md-4">
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                </div>
-                            @endif
-                            <div class="row mb-0">
-                                <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Login') }}
-                                    </button>
-
-
-                                </div>
-                            </div>
-                            <div class="rowd d-flex mt-3 justify-content-center text-center">
-                                @if ($errors->has('msg'))
-                                    <div class="error">{{ $errors->first('msg') }}</div>
-                                @endif
-                            </div>
-                        </form>
+    <div class="sidenav">
+        <div class="login-main-text">
+            <h2>User<br> Login Page</h2>
+        </div>
+    </div>
+    <div class="main">
+        <div class="col-md-6 col-sm-12">
+            <div class="login-form">
+                <form method="POST" action="{{ route('user.auth.signin') }}">
+                    @csrf
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="email" value="{{ old('email') }}" required
+                            autocomplete="email" autofocus>
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Password">
+                        @if ($errors->has('password'))
+                            <div class="error">{{ $errors->first('password') }}</div>
+                        @endif
+                    </div>
+                    <button type="submit" class="btn btn-black">Login</button>
+                    <div class="rowd d-flex mt-3 justify-content-center text-center">
+                        @if ($errors->has('msg'))
+                            <div class="error">{{ $errors->first('msg') }}</div>
+                        @endif
+                    </div>
+                </form>
             </div>
         </div>
     </div>

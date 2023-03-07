@@ -44,4 +44,16 @@ class UserAuthController extends Controller
         $this->authService->logout();
         return redirect()->route('user.auth.login');
     }
+    public function forgotPassword()
+    {
+        return view('user.auth.reset_password');
+    }
+    public function resetPassword(AuthRequest $request)
+    {
+        if ($this->authService->resetPassword($request)) {
+            return redirect()->route('user.auth.login');
+        } else {
+            return redirect()->back()->withErrors(['msg' => 'reset thất bại']);
+        }
+    }
 }

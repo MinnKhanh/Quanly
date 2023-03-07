@@ -19,7 +19,7 @@
                             </svg></label>
                     </div>
                     <div class="avatar-preview">
-                        <div id="imagePreview" style="overflow: hidden">
+                        <div id="imagePreview" style="width: 100%;height: 100%;" style="overflow: hidden">
                             <img id="output" />
                         </div>
                     </div>

@@ -25,7 +25,6 @@ class DepartmentRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:1'],
-            'manager' => ['required', 'numeric', 'min:1'],
         ];
     }
     public function messages()
@@ -35,9 +34,6 @@ class DepartmentRequest extends FormRequest
             'regex' => ':attribute không đúng định dạng',
             'same' => ':attribute không khớp',
             'string' => ':attribute phải là chuỗi',
-            'min' => [
-                'numeric' => ':attribute tối thiểu :min',
-            ],
         ];
     }
 }
